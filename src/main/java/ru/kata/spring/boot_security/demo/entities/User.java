@@ -37,7 +37,6 @@ public class User implements UserDetails {
 
     @Column(name = "password", nullable = false)
     @NotNull(message = "Enter password")
-//    @Size(min = 2, max = 20, message = "Name should be min 2, max 20")
     private String password;
 
     @Column(name = "login", nullable = false, unique = true)

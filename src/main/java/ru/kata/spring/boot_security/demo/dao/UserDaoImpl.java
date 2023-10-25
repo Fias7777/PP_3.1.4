@@ -1,9 +1,7 @@
 package ru.kata.spring.boot_security.demo.dao;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 
 import javax.persistence.EntityManager;
