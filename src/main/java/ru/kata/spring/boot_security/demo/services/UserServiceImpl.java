@@ -36,18 +36,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(long id) {
         userDao.delete(id);
     }
 
     @Override
     public void update(User user) {
-       try {
+        try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.update(user);
         } catch (EntityNotFoundException e) {
-           throw new EntityNotFoundException();
-       }
+            throw new EntityNotFoundException();
+        }
     }
 
     @Override
@@ -62,6 +62,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    @Override
+    public User findUserByLogin(String login) {
+        return userDao.findUserByLogin(login);
     }
 
     @Override

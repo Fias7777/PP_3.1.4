@@ -12,5 +12,4 @@ public interface UserDao {
     void update(User user);
     void delete(Long id);
     User findUserByLogin(String login);
-
 }

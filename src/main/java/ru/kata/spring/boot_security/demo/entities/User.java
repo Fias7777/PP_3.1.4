@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -18,7 +19,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long iD;
 
     @Column(name = "name", nullable = false)
     @NotEmpty(message = "Enter field name")
@@ -77,12 +78,12 @@ public class User implements UserDetails {
         this.login = login;
     }
 
-    public Long getId() {
-        return id;
+    public Long getID() {
+        return iD;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setID(Long iD) {
+        this.iD = iD;
     }
 
     public String getName() {
@@ -112,6 +113,11 @@ public class User implements UserDetails {
     public List<Role> getRoles() {
         return roles;
     }
+    public String getStringRoles() {
+        return this.roles.stream()
+                .map(Role::getName)
+                .collect(Collectors.joining(" "));
+    }
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
@@ -122,12 +128,12 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(age, user.age) && Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(password, user.password) && Objects.equals(login, user.login) && Objects.equals(roles, user.roles);
+        return Objects.equals(age, user.age) && Objects.equals(iD, user.iD) && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(password, user.password) && Objects.equals(login, user.login) && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastName, age, password, login, roles);
+        return Objects.hash(iD, name, lastName, age, password, login, roles);
     }
 
     @Override

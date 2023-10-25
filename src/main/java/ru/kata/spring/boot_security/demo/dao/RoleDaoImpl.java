@@ -42,4 +42,11 @@ public class RoleDaoImpl implements RoleDao{
         q.setParameter("role",roles);
         return new ArrayList<>(q.getResultList());
     }
+
+    @Override
+    public List<Role> findRolesByNameIn(List<String> roleNames) {
+        TypedQuery<Role> q = entityManager.createQuery("select r from Role r where r.roleName in :role", Role.class);
+        q.setParameter("role",roleNames);
+        return new ArrayList<>(q.getResultList());
+    }
 }

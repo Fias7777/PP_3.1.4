@@ -45,6 +45,8 @@ public class UserDaoImpl implements UserDao{
         entityManager.remove(user);
     }
 
+
+
     @Override
     public User findUserByLogin(String login) {
         TypedQuery<User> q = (entityManager.createQuery("select u from User u " +

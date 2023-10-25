@@ -12,10 +12,11 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
@@ -27,20 +28,33 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/admin")
-    public String pageForAdmin(Model model) {
-        model.addAttribute("users", userService.findAll());
+    @GetMapping
+    public String pageForAdmin(Model model, Principal principal) {
+        List<User> userList = userService.findAll();
+        User user = userList
+                .stream()
+                .filter(user1 -> user1.getLogin().equals(principal.getName()))
+                        .findFirst().orElseThrow(RuntimeException::new);
+
+        model.addAttribute("newUser", new User());
+        model.addAttribute("user", user);
+        model.addAttribute("roles", user.getStringRoles());
+        model.addAttribute("users", userList);
+
+
+
         return "admin";
     }
 
-    @GetMapping("/admin/create")
-    public String getTemplateForCreateUser(ModelMap model) {
+    @GetMapping("/create")
+    public String templateForCreateUser(ModelMap model) {
         model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.getAllRoles());
+        List<Role> availableRoles = roleService.getAllRoles();
+        model.addAttribute("availableRoles", availableRoles);
         return "create";
     }
 
-    @PostMapping("admin/create")
+    @PostMapping("/create")
     public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                              @RequestParam("listRoles") List<Long> roles) {
         if (bindingResult.hasErrors()) {
@@ -52,7 +66,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/edit/{id}")
+    @GetMapping("/edit/{id}")
     public String getTemplateForUpdatingUser(ModelMap model, @PathVariable("id") Long id) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
@@ -61,10 +75,11 @@ public class AdminController {
         return "edit";
     }
 
-    @PutMapping("/admin/edit")
+    @PutMapping("/edit")
     public String updateUser(@Valid User user,
                              BindingResult bindingResult,
-                             @RequestParam("listRoles") List<Long> roles) {
+                             @RequestParam("rolesList") List<Long> roles
+    ) {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
@@ -73,7 +88,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/admin/delete/{id}")
+    @DeleteMapping ("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return "redirect:/admin";
