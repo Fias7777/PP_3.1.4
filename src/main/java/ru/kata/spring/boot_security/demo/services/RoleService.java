@@ -9,10 +9,10 @@ public interface RoleService {
     List<Role> getAllRoles();
     void saveRoles(List<Role> roles);
 
-    public void addRole(Role role);
-    public Role findById(long id);
+    void addRole(Role role);
+    Role findById(int id);
 
-    List<Role> findByIdRoles(List<Long> rolesId);
+    List<Role> findByIdRoles(List<Integer> rolesId);
 
     List<Role> findRolesByNameIn(List<String> roleNames);
 }

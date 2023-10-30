@@ -32,21 +32,21 @@ public class RoleDaoImpl implements RoleDao{
     }
 
     @Override
-    public Role findById(long id) {
+    public Role findById(int id) {
         return entityManager.find(Role.class, id);
     }
 
     @Override
-    public List<Role> findByIdRoles(List<Long> roles) {
+    public List<Role> findByIdRoles(List<Integer> roles) {
         TypedQuery<Role> q = entityManager.createQuery("select r from Role r where r.id in :role", Role.class);
         q.setParameter("role",roles);
         return new ArrayList<>(q.getResultList());
     }
 
     @Override
-    public List<Role> findRolesByNameIn(List<String> roleNames) {
-        TypedQuery<Role> q = entityManager.createQuery("select r from Role r where r.roleName in :role", Role.class);
-        q.setParameter("role",roleNames);
+    public List<Role> findRolesByNameIn(List<String> name) {
+        TypedQuery<Role> q = entityManager.createQuery("select r from Role r where r.name in :role", Role.class);
+        q.setParameter("role",name);
         return new ArrayList<>(q.getResultList());
     }
 }

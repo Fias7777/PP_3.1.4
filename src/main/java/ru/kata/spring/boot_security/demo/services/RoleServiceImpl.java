@@ -32,12 +32,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findById(long id) {
+    public Role findById(int id) {
         return roleDao.findById(id);
     }
 
     @Override
-    public List<Role> findByIdRoles(List<Long> rolesId) {
+    public List<Role> findByIdRoles(List<Integer> rolesId) {
         return roleDao.findByIdRoles(rolesId);
     }
 

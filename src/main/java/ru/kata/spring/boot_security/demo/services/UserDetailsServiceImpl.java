@@ -19,11 +19,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user =userDao.findUserByLogin(login);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user =userDao.findUserByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("Пользователь с логином '%s' не найден", login));
+            throw new UsernameNotFoundException(String.format("Пользователь с логином '%s' не найден", username));
         }
-        return userDao.findUserByLogin(login);
+        return user;
     }
 }

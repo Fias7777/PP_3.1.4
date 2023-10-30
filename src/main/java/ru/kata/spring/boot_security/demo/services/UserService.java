@@ -11,15 +11,15 @@ import java.util.List;
 public interface UserService {
     void create(User user);
 
-    void deleteById(long id);
+    void deleteById(int id);
 
     void update(User user);
 
-    User findById(Long id);
+    User findById(int id);
 
     List<User> findAll();
 
-    public User findUserByLogin(String login);
+    User findUserByUsername(String login);
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

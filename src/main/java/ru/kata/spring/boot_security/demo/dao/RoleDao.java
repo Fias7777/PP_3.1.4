@@ -8,7 +8,7 @@ public interface RoleDao {
     void saveRoles(List<Role> roles);
     List<Role> getAllRoles();
     void addRole(Role role);
-    Role findById(long id);
-    List<Role> findByIdRoles(List<Long> roles);
-    List<Role> findRolesByNameIn(List<String> roleNames);
+    Role findById(int id);
+    List<Role> findByIdRoles(List<Integer> roles);
+    List<Role> findRolesByNameIn(List<String> name);
 }

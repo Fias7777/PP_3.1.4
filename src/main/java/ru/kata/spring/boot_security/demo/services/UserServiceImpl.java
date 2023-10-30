@@ -31,12 +31,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        roleService.saveRoles(user.getRoles());
         userDao.save(user);
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(int id) {
         userDao.delete(id);
     }
 
@@ -51,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(int id) {
         try {
             return userDao.findById(id);
         } catch (EntityNotFoundException e) {
@@ -65,15 +64,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByLogin(String login) {
-        return userDao.findUserByLogin(login);
+    public User findUserByUsername(String username) {
+        return userDao.findUserByUsername(username);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userDao.findUserByLogin(login);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDao.findUserByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException("No user with name: " + login);
+            throw new UsernameNotFoundException("No user with name: " + username);
         }
         Hibernate.initialize(user.getRoles());
         return user;
