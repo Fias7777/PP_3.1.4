@@ -130,13 +130,18 @@ public class User implements UserDetails {
     }
 
     public String getRolesToString() {
-        List<Role> list = getRoles().stream().toList();
-        StringBuilder str = new StringBuilder(list.get(0).toString());
-        if (list.size() == 2) {
-            str.append(" ").append(list.get(1).toString());
+        List<Role> list = new ArrayList<>(getRoles());
+        if (list.isEmpty()) {
+            return "No Roles";
+        } else {
+            StringBuilder str = new StringBuilder(list.get(0).toString());
+            if (list.size() == 2) {
+                str.append(" ").append(list.get(1).toString());
+            }
+            return String.valueOf(str);
         }
-        return String.valueOf(str);
     }
+
 
     @Override
     public String toString() {

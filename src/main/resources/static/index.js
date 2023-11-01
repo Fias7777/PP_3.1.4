@@ -112,7 +112,7 @@ async function editUser() {
     }
     let user = {
         id: idValue,
-        userName: usernameValue,
+        username: usernameValue,
         name: nameValue,
         lastName: lastNameValue,
         age: ageValue,
