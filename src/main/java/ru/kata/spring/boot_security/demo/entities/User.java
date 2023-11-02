@@ -1,10 +1,15 @@
 package ru.kata.spring.boot_security.demo.entities;
 
 
+import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 
@@ -17,18 +22,28 @@ public class User implements UserDetails {
     private int id;
 
     @Column(name="name")
+    @NotEmpty(message = "Enter field name")
+    @Size(min = 2, max = 30, message = "Name should be between 2 to 30")
     private String name;
 
     @Column(name = "last_name")
+    @NotEmpty(message = "Enter field lastName")
+    @Size(min = 2, max = 20, message = "Username should be min 2, max 20")
     private String lastName;
 
     @Column(name="age")
+    @NotNull
+    @Min(value = 10, message = "min 10")
+    @Max(value = 110, message = "max 110")
     private int age;
 
     @Column(name="username", unique = true)
+    @NotNull
+    @Size(min = 2, max = 20, message = "Username should be min 2, max 20")
     private String username;
 
     @Column(name="password")
+    @NotNull
     private String password;
 
     @ManyToMany(cascade = CascadeType.MERGE)

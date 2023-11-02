@@ -95,6 +95,103 @@ function editModal(id) {
 
 }
 
+function validateNewUserForm() {
+    let name = document.getElementById('nameNew').value;
+    let lastName = document.getElementById('lastNameNew').value;
+    let username = document.getElementById('usernameNew').value;
+    let age = document.getElementById('ageNew').value;
+    let password = document.getElementById('passwordNew').value;
+
+    let nameError = document.getElementById('nameNewError');
+    let lastNameError = document.getElementById('lastNameNewError');
+    let usernameError = document.getElementById('usernameNewError');
+    let ageError = document.getElementById('ageNewError');
+    let passwordError = document.getElementById('passwordNewError');
+
+    nameError.textContent = '';
+    lastNameError.textContent = '';
+    usernameError.textContent = '';
+    ageError.textContent = '';
+    passwordError.textContent = '';
+
+    if (name.length < 2) {
+        nameError.textContent = 'Name should be at least 2 characters long.';
+        return false;
+    }
+
+    if (lastName.length < 2) {
+        lastNameError.textContent = 'Name should be at least 2 characters long.';
+        return false;
+    }
+
+    if (username.length < 2) {
+        usernameError.textContent = 'Name should be at least 2 characters long.';
+        return false;
+    }
+
+    if (age < 10 || age > 110) {
+        ageError.textContent = 'Age should be between 10 and 110.';
+        return false;
+    }
+
+    if (password.length < 6 || password.length > 20) {
+        passwordError.textContent = 'Password should be between 6 and 20 characters.';
+        return false;
+    }
+
+    return true;
+}
+
+function validateEditUserForm() {
+    let name = document.getElementById('editName').value;
+    let lastName = document.getElementById('editLastName').value;
+    let username = document.getElementById('editUsername').value;
+    let age = document.getElementById('editAge').value;
+    let password = document.getElementById('editPassword').value;
+
+    let nameEditError = document.getElementById('nameEditError');
+    let lastNameEditError = document.getElementById('lastNameEditError');
+    let usernameEditError = document.getElementById('usernameEditError');
+    let ageEditError = document.getElementById('ageEditError');
+    let passwordEditError = document.getElementById('passwordEditError');
+
+    nameEditError.textContent = '';
+    lastNameEditError.textContent = '';
+    usernameEditError.textContent = '';
+    ageEditError.textContent = '';
+    passwordEditError.textContent = '';
+
+    if (name.length < 2) {
+        nameEditError.textContent = 'Name should be at least 2 characters long.';
+        return false;
+    }
+
+    if (lastName.length < 2) {
+        lastNameEditError.textContent = 'Last name should be at least 2 characters long.';
+        return false;
+    }
+
+    if (username.length < 2) {
+        usernameEditError.textContent = 'Username should be at least 2 characters long.';
+        return false;
+    }
+
+    if (age < 10 || age > 110) {
+        ageEditError.textContent = 'Age should be between 10 and 110.';
+        return false;
+    }
+
+    if (password.length < 6 || password.length > 20) {
+        passwordEditError.textContent = 'Password should be between 6 and 20 characters.';
+        return false;
+    }
+
+    return true;
+}
+
+
+
+
 
 async function editUser() {
     let idValue = document.getElementById('editId').value;

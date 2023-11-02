@@ -73,7 +73,8 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="userTable" role="tabpanel" aria-labelledby="userTable">
+                                    <div class="tab-pane fade show active" id="userTable" role="tabpanel"
+                                         aria-labelledby="userTable">
                                         <div class="card">
                                             <div class="card-header">
                                                 <div class="m-1">
@@ -107,27 +108,32 @@
                                                 </div>
                                             </div>
                                             <div class="card-body col-4 mx-auto text-center" bg-primary text-white>
-                                                <form id="newUserForm">
+                                                <form id="newUserForm" onsubmit="return validateNewUserForm()">
                                                     <br>
                                                     <label for="usernameNew"><b>Username</b></label>
                                                     <input name="username" type="text"
                                                            class="form-control" id="usernameNew"/>
+                                                    <div id="usernameNewError" class="error-message"></div>
                                                     <br>
                                                     <label for="nameNew"><b>Name</b></label>
                                                     <input name="name" type="text"
                                                            class="form-control" id="nameNew"/>
+                                                    <div id="nameNewError" class="error-message"></div>
                                                     <br>
                                                     <label for="lastNameNew"><b>Last name</b></label>
                                                     <input name="lastName" type="text"
                                                            class="form-control" id="lastNameNew"/>
+                                                    <div id="lastNameNewError" class="error-message"></div>
                                                     <br>
                                                     <label for="ageNew"><b>Age</b></label>
                                                     <input name="age" type="number"
-                                                           class="form-control" id="ageNew"/>
+                                                           class="form-control" id="ageNew" oninput="this.value = this.value.replace(/[^0-9]/g, '');"/>
+                                                    <div id="ageNewError" class="error-message"></div>
                                                     <br>
                                                     <label for="passwordNew"><b>Password</b></label>
                                                     <input name="password" type="password"
                                                            class="form-control" id="passwordNew"/>
+                                                    <div id="passwordNewError" class="error-message"></div>
                                                     <br>
                                                     <label for="rolesNew"><b>Role</b></label>
                                                     <select id="rolesNew" multiple class="form-select" size="3"
@@ -186,7 +192,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
-                                <form id="modalEdit">
+                                <form id="modalEdit" onsubmit="return validateEditUserForm()">
                                     <div class="modal-body col-md text-center">
                                         <br>
                                         <label for="editId"><b>ID</b></label>
@@ -196,25 +202,31 @@
                                         <label for="editUsername"><b>Username</b></label>
                                         <input name="username" type="text" class="form-control"
                                                id="editUsername" disabled/>
+                                        <div id="usernameEditError" class="error-message"></div>
                                         <br>
                                         <label for="editName"><b>Name</b></label>
                                         <input name="name" type="text" class="form-control"
                                                id="editName"/>
+                                        <div id="nameEditError" class="error-message"></div>
                                         <br>
                                         <label for="editLastName"><b>Last name</b></label>
                                         <input name="lastName" type="text" class="form-control"
                                                id="editLastName"/>
+                                        <div id="lastNameEditError" class="error-message"></div>
                                         <br>
                                         <label for="editAge"><b>Age</b></label>
                                         <input name="age" type="text" class="form-control"
-                                               id="editAge"/>
+                                               id="editAge" oninput="this.value = this.value.replace(/[^0-9]/g, '');"/>
+                                        <div id="ageEditError" class="error-message"></div>
                                         <br>
                                         <label for="editPassword"><b>Password</b></label>
                                         <input name="password" type="text" class="form-control"
                                                id="editPassword"/>
+                                        <div id="passwordEditError" class="error-message"></div>
                                         <br>
                                         <label class="form-label d-flex justify-content-center">
-                                            <b>Role</b></label>
+                                            <b>Role</b>
+                                        </label>
                                         <select id="editRole" multiple class="form-select" size="2"
                                                 name="roles" aria-label="size 2 select example">
                                             <option value="1">ADMIN</option>
@@ -223,14 +235,14 @@
                                         <br><br>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" id="editBtn"
-                                                onclick="editUser()">Edit
-                                        </button>
+                                        <button type="button" class="btn btn-primary" id="editBtn" onclick="if (validateEditUserForm()) editUser()">Edit</button>
+
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 id="editClose">Close
                                         </button>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
