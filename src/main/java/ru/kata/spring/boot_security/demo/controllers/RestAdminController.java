@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/page")
 public class RestAdminController {
 
     private final UserService userService;
@@ -27,23 +27,23 @@ public class RestAdminController {
         this.validator = validator;
     }
 
-    @GetMapping("/page")
+    @GetMapping
     @ResponseBody
     public ResponseEntity<List<User>> showAllUsers() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/page/user")
+    @GetMapping("/user")
     public ResponseEntity<User> authUser(Principal principal) {
         return new ResponseEntity<>(userService.findUserByUsername(principal.getName()), HttpStatus.OK);
     }
 
-    @GetMapping("/page/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
         return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/page")
+    @PostMapping
     public ResponseEntity<HttpStatus> addNewUser(@Valid @RequestBody User user, BindingResult bindingResult) {
         validator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -54,7 +54,7 @@ public class RestAdminController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/page")
+    @PatchMapping
     public ResponseEntity<HttpStatus> updateUser(@Valid @RequestBody User user, BindingResult bindingResult) {
         validator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -64,7 +64,7 @@ public class RestAdminController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/page/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable int id) {
         userService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
