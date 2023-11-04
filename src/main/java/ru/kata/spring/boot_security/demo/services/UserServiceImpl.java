@@ -6,10 +6,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.FieldError;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.entities.User;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -77,5 +79,19 @@ public class UserServiceImpl implements UserService {
         }
         Hibernate.initialize(user.getRoles());
         return user;
+    }
+
+    @Override
+    public List<String> parseFieldsErrors(List<FieldError> errors) {
+        final List<String> errorsResult = new ArrayList<>();
+        for (final FieldError fieldError : errors) {
+            errorsResult.add(String.format(
+                    "Invalid field: %s, Entered value: %s, Validation error reason: %s",
+                    fieldError.getField(),
+                    fieldError.getRejectedValue(),
+                    fieldError.getDefaultMessage()
+            ));
+        }
+        return errorsResult;
     }
 }

@@ -28,6 +28,7 @@ public class User implements UserDetails {
 
     @Column(name = "lastName", nullable = false)
     @NotEmpty(message = "Enter field lastName")
+    @Size(min = 2, max = 30, message = "Name should be between 2 to 30")
     private String lastName;
 
     @Column(name = "age", nullable = false)
@@ -38,7 +39,6 @@ public class User implements UserDetails {
 
     @Column(name = "password", nullable = false)
     @NotNull(message = "Enter password")
-//    @Size(min = 2, max = 20, message = "Name should be min 2, max 20")
     private String password;
 
     @Column(name = "login", nullable = false, unique = true)

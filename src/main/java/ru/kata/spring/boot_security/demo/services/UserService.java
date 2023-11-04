@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.services;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.FieldError;
 import ru.kata.spring.boot_security.demo.entities.User;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface UserService {
     public User findUserByLogin(String login);
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+    List<String> parseFieldsErrors(List<FieldError> errors);
 }

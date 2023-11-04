@@ -79,7 +79,7 @@
                                                 <h5 class="modal-title" th:id="${'edit' + user1.getID()}">Edit User</h5>
 
                                                 <!-- Кнопка закрытия -->
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                <button type="button"  class="btn-close" data-bs-dismiss="modal"
                                                         aria-label=""></button>
                                             </div>
                                             <div class="modal-body">
@@ -106,6 +106,7 @@
                                                                        th:value="${user1.getName()}"
                                                                        th:name="name" required>
 
+
                                                             </div>
 
                                                             <div class="mb-3 text-center">
@@ -115,6 +116,7 @@
                                                                        id="edit-lastname"
                                                                        th:value="${user1.getLastName()}"
                                                                        th:name="lastName">
+
                                                             </div>
 
                                                             <div class="mb-3 text-center">
@@ -140,12 +142,25 @@
                                                                    th:attr="value=${user1.password}"
                                                                    th:name="password">
                                                         </div>
+
                                                             <div>
                                                                 <select class="form-select form-select-sm" size="2" multiple id="rolies" name ="rolesList" style="margin-bottom: 20px;">
-                                                                    <option value="1">ADMIN</option>
+                                                                    <option value="1" selected>ADMIN</option>
                                                                     <option value="2" >USER</option>
                                                                 </select>
                                                             </div>
+<!--                                                            <div>-->
+<!--                                                                <select aria-label="Default select example"-->
+<!--                                                                        class="form-select"-->
+<!--                                                                        required th:name="roles">-->
+<!--                                                                    <option th:each="role : ${roles}"-->
+<!--                                                                            th:switch="${role.getName()}"-->
+<!--                                                                            th:value="${role.getId()}">-->
+<!--                                                                        <span th:case="'ROLE_ADMIN'">ADMIN</span>-->
+<!--                                                                        <span th:case="'ROLE_USER'">USER</span>-->
+<!--                                                                    </option>-->
+<!--                                                                </select>-->
+<!--                                                            </div>-->
 
                                                             <div class="modal-footer text-end">
                                                                 <button type="button" class="btn btn-secondary"
@@ -293,7 +308,7 @@
                                     <div>
                                         <select class="form-select form-select-sm" size="2" id="roles" multiple  th:name="listRoles" style="margin-bottom: 20px;">
                                             <option value="1">ADMIN</option>
-                                            <option value="2" >USER</option>
+                                            <option value="2" selected>USER</option>
                                         </select>
                                     </div>
                                     <div class="d-grid gap-2">
