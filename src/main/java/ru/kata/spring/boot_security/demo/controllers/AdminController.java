@@ -12,11 +12,10 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/")
 public class AdminController {
 
     private final UserService userService;
@@ -28,38 +27,24 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-
-    @GetMapping
-    public String pageForAdmin(Model model, Principal principal) {
-        List<User> userList = userService.findAll();
-        User user = userList
-                .stream()
-                .filter(user1 -> user1.getLogin().equals(principal.getName()))
-                .findFirst().orElseThrow(RuntimeException::new);
-
-        model.addAttribute("newUser", new User());
-        model.addAttribute("user", user);
-        model.addAttribute("roles", user.getStringRoles());
-        model.addAttribute("users", userList);
+    @GetMapping("/admin")
+    public String pageForAdmin(Model model) {
+        model.addAttribute("users", userService.findAll());
         return "admin";
     }
 
-    @GetMapping("/create")
-    public String templateForCreateUser(ModelMap model) {
-        model.addAttribute("newUser", new User());
-        List<Role> availableRoles = roleService.getAllRoles();
-        model.addAttribute("availableRoles", availableRoles);
-        return "admin";
+    @GetMapping("/admin/create")
+    public String getTemplateForCreateUser(ModelMap model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.getAllRoles());
+        return "create";
     }
 
-    @PostMapping("/create")
-    public String createUser(@Valid @ModelAttribute("newUser") User user, BindingResult bindingResult,
-                             @RequestParam("listRoles") List<Long> roles,
-                             ModelMap modelMap) {
+    @PostMapping("admin/create")
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+                             @RequestParam("listRoles") List<Long> roles) {
         if (bindingResult.hasErrors()) {
-            final List<String> strings = userService.parseFieldsErrors(bindingResult.getFieldErrors());
-            modelMap.addAttribute("errorsList", strings);
-            return "errors";
+            return "create";
         }
         List<Role> rolesList = roleService.findByIdRoles(roles);
         user.setRoles(rolesList);
@@ -67,33 +52,28 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-
-    @GetMapping("/edit/{id}")
-    public String TemplateForUpdatingUser(ModelMap model, @PathVariable("id") Long id) {
+    @GetMapping("/admin/edit/{id}")
+    public String getTemplateForUpdatingUser(ModelMap model, @PathVariable("id") Long id) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getAllRoles());
         user.setPassword(null);
-        return "admin";
+        return "edit";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    @PutMapping("/admin/edit")
     public String updateUser(@Valid User user,
                              BindingResult bindingResult,
-                             @RequestParam("rolesList") List<Long> roles,
-                             ModelMap modelMap
-    ) {
+                             @RequestParam("listRoles") List<Long> roles) {
         if (bindingResult.hasErrors()) {
-            final List<String> strings = userService.parseFieldsErrors(bindingResult.getFieldErrors());
-            modelMap.addAttribute("errorsList", strings);
-            return "errors";
+            return "edit";
         }
         user.setRoles(roleService.findByIdRoles(roles));
         userService.update(user);
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return "redirect:/admin";

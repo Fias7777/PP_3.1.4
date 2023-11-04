@@ -28,7 +28,6 @@ public class Runner implements CommandLineRunner {
         roleService.addRole(new Role("USER"));
 
         List<Role> adminRole = new ArrayList<>();
-        List<Role> userRole = new ArrayList<>();
         adminRole.add(roleService.findById(1L));
         adminRole.add(roleService.findById(2L));
         userService.create(new User("Ivan", "Ivanov", 45, "ADMIN", "ADMIN", adminRole));
