@@ -73,7 +73,6 @@ public class AdminController {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("currentRole", user.getStringRoles());
         user.setPassword(null);
         return "admin";
     }
